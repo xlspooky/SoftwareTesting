@@ -21,14 +21,15 @@ public class UserInterfaceTests
 
         IPage page = await context.NewPageAsync();
         //Navigate to Google.com
-        /* IReadOnlyList<IFrame> f = page.Frames;
+        await page.GotoAsync("https://google.com");
+        IReadOnlyList<IFrame> f = page.Frames;
          if (f.Count > 1)
          {
              await f[1].ClickAsync("text=No thanks");
          }*/
         // Search Playwright
-        //await page.FillAsync("[aria-label=\"Search\"]", "Playwright");
-        /*
+        await page.FillAsync("[aria-label=\"Search\"]", "Playwright");
+        
         // Press Enter
         var response = await page.RunAndWaitForNavigationAsync(async () => await page.PressAsync("[aria-label=\"Search\"]", "Enter"));
         //Click on the first search option
@@ -38,35 +39,39 @@ public class UserInterfaceTests
         // Click text=Get started
         await page.ClickAsync("text=Get Started");
         //Verify Page URL
-        Assert.Equal("https://playwright.dev/docs/intro", page.Url);*/
+        Assert.Equal("https://playwright.dev/docs/intro", page.Url);
 
+        //start of letsusedata login tests
+
+        //navigate to letsusedata
         await page.GotoAsync("https://letsusedata.com/");
 
+        //fill username for Test1
         await page.GetByPlaceholder("Your Username").ClickAsync();
-
         await page.GetByPlaceholder("Your Username").FillAsync("Test1");
 
+        //fill password
         await page.GetByPlaceholder("Your Password").ClickAsync();
-
         await page.GetByPlaceholder("Your Password").FillAsync("12345678");
 
-        //await page.GetByRole(AriaRole.Button,  new() { name = "Login" }).ClickAsync();
+        //click login
         await page.ClickAsync("[id = 'javascriptlogin']");
 
+        //checks the url, invalid login remains at index.html
         Assert.Equal("https://letsusedata.com/index.html", page.Url);
 
-
+        //fill username for Test2
         await page.GetByPlaceholder("Your Username").ClickAsync();
-
         await page.GetByPlaceholder("Your Username").FillAsync("Test2");
 
+        //fill password
         await page.GetByPlaceholder("Your Password").ClickAsync();
-
         await page.GetByPlaceholder("Your Password").FillAsync("iF3sBF7c");
 
-        //await page.GetByRole(AriaRole.Button, new() { name = "Login" }).ClickAsync();
+        //click login
         await page.ClickAsync("[id = 'javascriptlogin']");
 
+        //checks the url, successful login redirects to courseselection.html
         Assert.Equal("https://letsusedata.com/CourseSelection.html", page.Url);
     }
 }
