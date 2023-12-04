@@ -63,7 +63,7 @@ public class UserInterfaceTests
 
         await page.GetByPlaceholder("Your Password").FillAsync("iF3sBF7c");
 
-        await page.GetByRole(AriaRole.Button, { name = "Login" }).ClickAsync();
+        await page.GetByRole(AriaRole.Button, new() { name = "Login" }).ClickAsync();
 
         Assert.Equal("https://letsusedata.com/CourseSelection.html", page.Url);
     }
