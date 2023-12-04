@@ -26,7 +26,7 @@ public class UserInterfaceTests
          if (f.Count > 1)
          {
              await f[1].ClickAsync("text=No thanks");
-         }*/
+         }
         // Search Playwright
         await page.FillAsync("[aria-label=\"Search\"]", "Playwright");
         
