@@ -50,7 +50,8 @@ public class UserInterfaceTests
 
         await page.GetByPlaceholder("Your Password").FillAsync("12345678");
 
-        await page.GetByRole(AriaRole.Button,  new() { name = "Login" }).ClickAsync();
+        //await page.GetByRole(AriaRole.Button,  new() { name = "Login" }).ClickAsync();
+        await page.ClickAsync("[id = 'javascriptlogin']");
 
         Assert.Equal("https://letsusedata.com/index.html", page.Url);
 
@@ -63,7 +64,8 @@ public class UserInterfaceTests
 
         await page.GetByPlaceholder("Your Password").FillAsync("iF3sBF7c");
 
-        await page.GetByRole(AriaRole.Button, new() { name = "Login" }).ClickAsync();
+        //await page.GetByRole(AriaRole.Button, new() { name = "Login" }).ClickAsync();
+        await page.ClickAsync("[id = 'javascriptlogin']");
 
         Assert.Equal("https://letsusedata.com/CourseSelection.html", page.Url);
     }
