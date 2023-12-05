@@ -24,5 +24,7 @@ jobs:
       run: dotnet restore ./src/SoftwareTesting.sln
     - name: Build
       run: dotnet build ./src/SoftwareTesting.sln --no-restore
+    - name: Install browser
+      run: pwsh bin/Debug/net7.0/playwright.ps1 install
     - name: Test
       run: dotnet test ./src/PlaywrightTests/PlaywrightTests.csproj
