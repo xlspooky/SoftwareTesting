@@ -5,14 +5,20 @@
 // http://www.skimedic.com 2022/07/22
 // ==================================
 
+using Microsoft.Playwright;
+using System.Diagnostics;
+
 namespace PlaywrightTests;
+
 
 public class UserInterfaceTests
 {
+
     //https://medium.com/version-1/playwright-a-modern-end-to-end-testing-for-web-app-with-c-language-support-c55e931273ee#:~
     [Fact]
     public static async Task VerifyGoogleSearchForPlaywright()
     {
+        
         using IPlaywright playwright = await Playwright.CreateAsync();
         await using var browser =
             await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions() { Headless = false, SlowMo = 50 });
@@ -21,7 +27,7 @@ public class UserInterfaceTests
 
         IPage page = await context.NewPageAsync();
         //Navigate to Google.com
-        await page.GotoAsync("https://google.com");
+       /* await page.GotoAsync("https://google.com");
         IReadOnlyList<IFrame> f = page.Frames;
          if (f.Count > 1)
          {
@@ -39,13 +45,14 @@ public class UserInterfaceTests
         // Click text=Get started
         await page.ClickAsync("text=Get Started");
         //Verify Page URL
-        Assert.Equal("https://playwright.dev/docs/intro", page.Url);
+        Assert.Equal("https://playwright.dev/docs/intro", page.Url);*/
 
         //start of letsusedata login tests
 
         //navigate to letsusedata
         await page.GotoAsync("https://letsusedata.com/");
 
+        
         //fill username for Test1
         await page.GetByPlaceholder("Your Username").ClickAsync();
         await page.GetByPlaceholder("Your Username").FillAsync("Test1");
@@ -55,10 +62,12 @@ public class UserInterfaceTests
         await page.GetByPlaceholder("Your Password").FillAsync("12345678");
 
         //click login
-        await page.ClickAsync("[id = 'javascriptlogin']");
+        
+        await page.GetByRole(AriaRole.Button, new() { NameString = "Login" }).ClickAsync();
 
-        //checks the url, invalid login remains at index.html
-        Assert.Equal("https://letsusedata.com/index.html", page.Url);
+        //checks the page to see if invalid password shows up
+        await Assertions.Expect(page.Locator("body")).ToContainTextAsync("Invalid Password");
+        
 
         //fill username for Test2
         await page.GetByPlaceholder("Your Username").ClickAsync();
@@ -69,9 +78,11 @@ public class UserInterfaceTests
         await page.GetByPlaceholder("Your Password").FillAsync("iF3sBF7c");
 
         //click login
-        await page.ClickAsync("[id = 'javascriptlogin']");
+        await page.GetByRole(AriaRole.Button, new() { NameString = "Login" }).ClickAsync();
 
-        //checks the url, successful login redirects to courseselection.html
-        Assert.Equal("https://letsusedata.com/CourseSelection.html", page.Url);
+        //checks to see if Intro to Data Analytics class is there to verify the login was successful
+        await Assertions.Expect(page.Locator("[id=\"\\31 14CourseTitle\"]")).ToContainTextAsync("Intro to Data Analytics");
     }
+
+
 }

@@ -19,7 +19,7 @@ IReadOnlyList<IFrame> f = page.Frames;
 if (f.Count > 1)
 {
     //await f[1].ClickAsync("[aria-label=\"No thanks\"]");
-    await f[1].ClickAsync("text=No thanks");
+    await f[1].ClickAsync("text=Stay Signed Out");
     //await f[1].PressAsync("[aria-label=\"No thanks\"]","Enter");
 }
 //Search
