@@ -23,7 +23,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./src/SoftwareTesting.sln
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./src/SoftwareTesting.sln --no-restore
     - name: Ensure browsers are installed
       run: pwsh bin/Debug/net6.0/playwright.ps1 install --with-deps
     - name: Test
