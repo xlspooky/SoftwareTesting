@@ -27,4 +27,4 @@ jobs:
     - name: Install browser
       run: pwsh ./src/PlaywrightTests/bin/Debug/net6.0/playwright.ps1 install --with-deps
     - name: Test
-      run: dotnet test ./src/PlaywrightTests/PlaywrightTests.csproj --headless:true
+      run: dotnet test ./src/PlaywrightTests/PlaywrightTests.csproj
